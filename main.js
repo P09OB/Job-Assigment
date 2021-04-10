@@ -1,5 +1,6 @@
-pantalla = 0;
 
+let pantalla = 7;
+let opcion;
 let bx;
 let by;
 let boxSize = 70;
@@ -38,11 +39,14 @@ function preload(){
   fondoInstrucciones2 = loadImage('resources/instrucciones2.png');
   btnEmpezarNormal = loadImage('resources/btnEmpezar1.png');
   btnEmpezarPresionado = loadImage('resources/btnEmpezar2.png');
+  resumenArquetipos = loadImage('resources/resumenArquetipos.png');
 
   backgroundImag = loadImage('resources/fondo.png');
   boxes = loadImage('resources/arqueotiposcasillas.png');
   buttonContinue = loadImage('resources/botonOscuro.png');
   buttonContinue2 = loadImage('resources/botonClaro.png');
+  EquisNormal = loadImage('resources/EquisNormal.png');
+  EquisPresionado = loadImage('resources/EquisPresionado.png');
 
   circleDavid = loadImage('resources/DavidCirculo.png');
   circleLuis = loadImage('resources/LuisCirculo.png');
@@ -94,49 +98,53 @@ function draw() {
     break;
 
     case 7:
+        /*image(backgroundImag, 0, 0);
+        image(boxes,235,421);
+        image(signboard,335,28);
+        image(optionsButton,36,35);*/
 
+        
     //COLOCA TODO ESTO EN UN CASE ES DECIR SWITCH
-  imageMode(CORNER);
-  image(backgroundImag, 0, 0);
-  image(boxes,235,421);
-  image(signboard,335,28);
+        imageMode(CORNER);
+        image(backgroundImag, 0, 0);
+        image(boxes,235,421);
+        image(signboard,335,28);
 
   // rectangulo de tiempo
-  noStroke();
-  fill('#9AEDFF');
-  rect(1079,35,145,57,15);
+        noStroke();
+        fill('#9AEDFF');
+        rect(1079,35,145,57,15);
 
   //botones de candidatos y arquetiposs
-  image(optionsButton,36,35);
+        image(optionsButton,36,35);
 
-  if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
-    image(candidatesButton,38,35);
+        if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
+            //image(candidatesButton,38,35);
+        }
 
-  }
-
-  if(mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY <165){
-    image(ArchetypeButton,37,106);
-
-  }
+        if(mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY <165){
+            //image(ArchetypeButton,37,106);
+        }
 
   //boolean aparece cuando se coloquen todos los personajes
-  image(buttonContinue,538,625);
-  if(mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY <699){
-    image(buttonContinue2,538,625);
+        for (let i = 0; i < characters.length; i++) {
+            characters[i].pintar();
+        }
+    break;
 
-  }
-  
-  fill(255);
-  text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
-  for (let i = 0; i < characters.length; i++) {
-    characters[i].pintar();
-  }
+    case 8:
+        image(resumenArquetipos, 640, 360, 1280, 720);
+    break;
 
-  //TODO ESTO HASTA ACA 
+    case 9:
 
     break;
+
+    
 }
 
+fill(0);
+text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
  //ubicacion de los botones
  mouseMoved();
 
@@ -145,9 +153,72 @@ function draw() {
 
 function mouseClicked(){
   console.log(+pantalla+'en total');
-  pantalla++;
+  if(pantalla == 0){
+    if(mouseX > 510 && mouseX < 726 && mouseY > 500 && mouseY < 576 ){
+        console.log('hola');
+        pantalla++;
+    }
 }
 
+if(pantalla == 1){
+    if(mouseX > 520 && mouseX < 735 && mouseY > 555 && mouseY < 630){
+        image(btnEntiendoPresionado, 520, 555);
+        pantalla++;
+    }
+}
+
+if(pantalla == 2){
+    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+        image(btnContinuarPresionado, 1000, 600);
+        pantalla++;
+    }
+}
+
+if(pantalla == 3){
+    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+        image(btnContinuarPresionado, 1000, 600);
+        pantalla++;
+    }
+}
+
+if(pantalla == 4){
+    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+        image(btnContinuarPresionado, 1000, 600);
+        pantalla++;
+    }
+}
+
+if(pantalla == 5){
+    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+        image(btnContinuarPresionado, 1000, 600);
+        pantalla++;
+    }
+}
+
+if(pantalla == 6){
+    if(mouseX > 520 && mouseX < 735 && mouseY > 600 && mouseY < 675){
+        image(btnEmpezarPresionado, 520, 600);
+        pantalla++;
+    }
+}
+
+if(pantalla == 7){
+    if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
+        pantalla = 8;
+    }
+}
+
+if(pantalla == 8){
+    if(mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118){
+      pantalla = 7;
+    }
+}
+
+  
+}
+
+
+//-------
 function mouseMoved(){
   if(pantalla == 0){
       if(mouseX > 510 && mouseX < 726 && mouseY > 500 && mouseY < 576 ){
@@ -203,6 +274,30 @@ function mouseMoved(){
           image(btnEmpezarPresionado, 520, 600);
       }else{
           image(btnEmpezarNormal, 520, 600);
+      }
+  }
+
+  if(pantalla == 7){
+    if(mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY <700){
+        image(buttonContinue2,640,670);
+    }else{
+        image(buttonContinue,640,670);
+    }
+
+    if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
+        image(candidatesButton,118,64);
+    }
+
+    if(mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY <165){
+        image(ArchetypeButton,117,135);
+    }
+  }
+
+  if(pantalla == 8){
+      if(mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118){
+        image(EquisPresionado, 1180, 90);
+      }else{
+        image(EquisNormal, 1180, 90);
       }
   }
 }
