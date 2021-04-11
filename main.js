@@ -1,5 +1,5 @@
 
-let pantalla = 7;
+let pantalla = 0;
 let opcion;
 let bx;
 let by;
@@ -98,13 +98,7 @@ function draw() {
     break;
 
     case 7:
-        /*image(backgroundImag, 0, 0);
-        image(boxes,235,421);
-        image(signboard,335,28);
-        image(optionsButton,36,35);*/
-
         
-    //COLOCA TODO ESTO EN UN CASE ES DECIR SWITCH
         imageMode(CORNER);
         image(backgroundImag, 0, 0);
         image(boxes,235,421);
@@ -115,18 +109,8 @@ function draw() {
         fill('#9AEDFF');
         rect(1079,35,145,57,15);
 
-  //botones de candidatos y arquetiposs
         image(optionsButton,36,35);
 
-        if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
-            //image(candidatesButton,38,35);
-        }
-
-        if(mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY <165){
-            //image(ArchetypeButton,37,106);
-        }
-
-  //boolean aparece cuando se coloquen todos los personajes
         for (let i = 0; i < characters.length; i++) {
             characters[i].pintar();
         }
@@ -152,68 +136,75 @@ text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
 }
 
 function mouseClicked(){
-  console.log(+pantalla+'en total');
-  if(pantalla == 0){
-    if(mouseX > 510 && mouseX < 726 && mouseY > 500 && mouseY < 576 ){
-        console.log('hola');
-        pantalla++;
-    }
-}
 
-if(pantalla == 1){
-    if(mouseX > 520 && mouseX < 735 && mouseY > 555 && mouseY < 630){
-        image(btnEntiendoPresionado, 520, 555);
-        pantalla++;
-    }
-}
+    switch(pantalla){
+        case 0:
+            if(mouseX > 510 && mouseX < 726 && mouseY > 500 && mouseY < 576 ){
+                console.log('hola');
+                pantalla = 1;
+            }
+        break;
+    
+        case 1:
+            if(mouseX > 520 && mouseX < 735 && mouseY > 555 && mouseY < 630){
+                image(btnEntiendoPresionado, 520, 555);
+                pantalla = 2;
+            }
+        break;
+    
+        case 2:
+            if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+                image(btnContinuarPresionado, 1000, 600);
+                pantalla = 3;
+            }
+        break;
+    
+        case 3:
+            if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+                image(btnContinuarPresionado, 1000, 600);
+                pantalla = 4;
+            }
+        break;
+    
+        case 4:
+            if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+                image(btnContinuarPresionado, 1000, 600);
+                pantalla = 5;
+            }
+        break;
+    
+        case 5:
+            if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
+                image(btnContinuarPresionado, 1000, 600);
+                pantalla = 6;
+            }
+        break;
+    
+        case 6:
+            if(mouseX > 520 && mouseX < 735 && mouseY > 600 && mouseY < 675){
+                image(btnEmpezarPresionado, 520, 600);
+                pantalla = 7;
+            }
+        break;
+    
+        case 7:
+            if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
+                pantalla = 8;
+            }
+           
+        break;
+    
+        case 8:
+            if(mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118){
+                pantalla = 7;
+              }
+        break;
+    
+        case 9:
+    
+        break;
 
-if(pantalla == 2){
-    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
-        image(btnContinuarPresionado, 1000, 600);
-        pantalla++;
-    }
-}
-
-if(pantalla == 3){
-    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
-        image(btnContinuarPresionado, 1000, 600);
-        pantalla++;
-    }
-}
-
-if(pantalla == 4){
-    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
-        image(btnContinuarPresionado, 1000, 600);
-        pantalla++;
-    }
-}
-
-if(pantalla == 5){
-    if(mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675){
-        image(btnContinuarPresionado, 1000, 600);
-        pantalla++;
-    }
-}
-
-if(pantalla == 6){
-    if(mouseX > 520 && mouseX < 735 && mouseY > 600 && mouseY < 675){
-        image(btnEmpezarPresionado, 520, 600);
-        pantalla++;
-    }
-}
-
-if(pantalla == 7){
-    if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
-        pantalla = 8;
-    }
-}
-
-if(pantalla == 8){
-    if(mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118){
-      pantalla = 7;
-    }
-}
-
+ }
   
 }
 
@@ -304,17 +295,25 @@ function mouseMoved(){
 
 function mouseDragged() {
 
-  for (let i = 0; i < characters.length; i++) {
-    characters[i].dragged();
-  }
+    if(pantalla === 7){
+
+        for (let i = 0; i < characters.length; i++) {
+            characters[i].dragged();
+          }
+
+    }
   
 }
 
 function mouseReleased() {
-  console.log('ya');
 
-  for (let i = 0; i < characters.length; i++) {
-    characters[i].nodrag();
-  }
+    if(pantalla === 7){
+        for (let i = 0; i < characters.length; i++) {
+            characters[i].nodrag();
+          }
+
+    }
+
+  
 
 }
