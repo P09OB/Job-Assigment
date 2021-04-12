@@ -9,6 +9,13 @@ let boxSize = 70;
 let overBox = false;
 let locked = false;
 let characters = [];
+let errores=0;
+
+let analista;
+let diplomatico;
+let prueba;
+let centinela;
+let explorador;
 
 let timer;
 let counter = 240;
@@ -55,8 +62,9 @@ function preload(){
   luisInfo = loadImage('resources/Luis.png');
 
   backgroundImag = loadImage('resources/fondo.png');
+  backgroundJobs = loadImage('resources/fondoCargo.png');
   boxes = loadImage('resources/arqueotiposcasillas.png');
-  //buttonContinue = loadImage('resources/botonOscuro.png');
+  buttonContinue = loadImage('resources/botonOscuro.png');
   buttonContinue2 = loadImage('resources/botonClaro.png');
   EquisNormal = loadImage('resources/EquisNormal.png');
   EquisPresionado = loadImage('resources/EquisPresionado.png');
@@ -76,6 +84,19 @@ function preload(){
   optionsButton = loadImage('resources/opcionesBotones.png');
   ArchetypeButton = loadImage('resources/BotonArqueotipo.png');
   candidatesButton = loadImage ('resources/botonCandidatos.png');
+  cargos = loadImage ('resources/Cargos.png');
+  davidCargo = loadImage ('resources/DavidCargo.png');
+  camilaCargo = loadImage ('resources/CamilaCargo.png');
+  estefaniaCargo = loadImage ('resources/EstefaniaCargo.png');
+  jhonCargo = loadImage ('resources/JhonCargo.png');
+  luisCargo = loadImage ('resources/LuisCargo.png');
+  summary = loadImage ('resources/resultados.png');
+  thanks = loadImage ('resources/fondoFinal.png')
+
+
+
+
+
 
 }
 
@@ -84,6 +105,8 @@ function draw() {
   switch(pantalla){
     case 0:
         image(fondoInicio1, 0, 0, 1280, 720);
+        image(btoInicioNormal, 510, 500);
+
     break;
 
     case 1:
@@ -166,6 +189,43 @@ function draw() {
 
     case 10:
 
+    imageMode(CORNER);
+
+    image(backgroundJobs,0,0);
+    image(davidCargo,200,160);
+    image(camilaCargo,396,160);
+    image(estefaniaCargo,623,160);
+    image(jhonCargo,847,160);
+    image(luisCargo,1052,160);
+    image(cargos,0,300);
+
+    break;
+//SEGURO 
+    case 11: 
+
+
+    break;
+
+//ERROR
+
+    case 12:
+
+
+    break;
+
+    case 13:
+
+        image(thanks,0,0);
+
+
+    break;
+
+    case 14:
+        image(summary,0,0);
+    fill(0);
+    textSize(28);
+    text(errores,680,294);
+
     break;
     
 }
@@ -182,10 +242,14 @@ if(pantalla === 7 || pantalla === 8 || pantalla === 10){
 }
 
 if (minutes === 0 && seconds === 0){
+    if(pantalla === 7){
+        matchArqueotipo();
+    }
+    pantalla = 13;
 }
 
 fill(0);
-text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
+//text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
  //ubicacion de los botones
  mouseMoved();
 
@@ -269,6 +333,30 @@ function mouseClicked(){
             }
         break;
 
+        case 10:
+            if(mouseX> 538 && mouseX<742 && mouseY > 625 && mouseY < 699){
+                pantalla= 13;
+            }
+
+        break;
+
+        case 11:
+
+        break;
+
+        case 12:
+
+        break;
+
+        case 13:
+            if(mouseX> 539 && mouseX<743 && mouseY > 453 && mouseY < 527){
+                pantalla= 14;
+            }
+
+        break;
+
+        
+
  }
   
 }
@@ -277,11 +365,8 @@ function mouseMoved(){
   if(pantalla == 0){
       if(mouseX > 510 && mouseX < 726 && mouseY > 500 && mouseY < 576 ){
           image(btoInicioPresionado, 510, 500); 
-      }else{
-          image(btoInicioNormal, 510, 500);
       }
-  }
-
+    }
   if(pantalla == 1){
       if(mouseX > 520 && mouseX < 735 && mouseY > 555 && mouseY < 630){
           image(btnEntiendoPresionado, 520, 555);
@@ -334,7 +419,7 @@ function mouseMoved(){
     if(mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY <700){
         image(buttonContinue2,640,670);
     }else{
-        //image(buttonContinue,640,670);
+        image(buttonContinue,640,670);
     }
 
     if(mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY <82){
@@ -430,22 +515,68 @@ function mouseReleased() {
 }
 function matchArqueotipo(){
 
-    var prueba = false;
-    let errores = 0;
+    
 
     for (let i = 0; i < characters.length; i++) {
 
-        //Prueba luis explorador 
-
-        if(characters[1].getPosX() > 861 && characters[1].getPosX() < 1045 && characters[1].getPosY() > 421 && characters[1].getPosY() < 596){
+        //Luis Ninguno 
+        if(characters[1].getPosX() > 375 && characters[1].getPosX() < 538 && characters[1].getPosY() > 181 && characters[1].getPosY() < 383){
             prueba = true;
 
         } else {
             prueba = false;
-            errores += 1;
         }
+        // Estefania ANALISTA
+        if(characters[4].getPosX() > 235 && characters[4].getPosX() < 418 && characters[4].getPosY() > 421 && characters[4].getPosY() < 596){
+            analista = true;
+
+        } else {
+            analista = false;
+        }
+
+        // David DIPLOMATICO
+
+        if(characters[0].getPosX() > 442 && characters[0].getPosX() < 626 && characters[0].getPosY() > 421 && characters[0].getPosY() < 596){
+            diplomatico = true;
+
+        } else {
+            diplomatico = false;
+        }
+
+        //Jhon CENTINELA
+
+        if(characters[3].getPosX() > 652 && characters[3].getPosX() < 836 && characters[3].getPosY() > 421 && characters[3].getPosY() < 596){
+            centinela = true;
+
+        } else {
+            centinela = false;
+        }
+
+        //Camila EXPLORADOR
+
+        if(characters[2].getPosX() > 861 && characters[2].getPosX() < 1045 && characters[2].getPosY() > 421 && characters[2].getPosY() < 596){
+            explorador = true;
+
+        } else {
+            explorador = false;
+        }
+
         
       }
+
+      if(!analista) errores+= 1;
+      if(!diplomatico) errores+= 1;
+      if(!centinela) errores+= 1;
+      if(!explorador) errores+= 1;
+      if(!prueba) errores+= 1;
+
+
+      if(!analista || !diplomatico || !explorador || !explorador || !prueba){
+        alert("VOLVER A INTENTAR"+errores);
+      }else{
+        pantalla = 10;
+      } 
+
 
       console.log(prueba);
 
