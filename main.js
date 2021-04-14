@@ -1,6 +1,7 @@
 
-let pantalla = 14;
+let pantalla = 10;
 let postulante;
+let cargo = 'original'
 
 let characters = [];
 
@@ -57,6 +58,15 @@ function preload() {
     davidInfo = loadImage('resources/David.png');
     camilaInfo = loadImage('resources/Camila.png');
     luisInfo = loadImage('resources/Luis.png');
+    btnVolver = loadImage('resources/btnVolver.png');
+    btnConfirmar = loadImage('resources/confirmar.png');
+    cargoFondo = loadImage('resources/cargoFondo.png');
+    okBtn = loadImage('resources/okBtn.png');
+
+    cargoAdmin = loadImage('resources/cargoAdmin.png');
+    cargoCalidad = loadImage('resources/cargoCalid.png');
+    cargoMercadotecnia = loadImage('resources/cargoMerca.png');
+    cargoProduccion = loadImage('resources/cargoProd.png');
 
     backgroundImag = loadImage('resources/fondo.png');
     backgroundJobs = loadImage('resources/fondoCargo.png');
@@ -65,6 +75,7 @@ function preload() {
     buttonContinue2 = loadImage('resources/botonClaro.png');
     EquisNormal = loadImage('resources/EquisNormal.png');
     EquisPresionado = loadImage('resources/EquisPresionado.png');
+    btnContratar = loadImage('resources/contratarBtn.png');
 
     circleDavid = loadImage('resources/DavidCirculo.png');
     circleLuis = loadImage('resources/LuisCirculo.png');
@@ -180,15 +191,37 @@ function draw() {
 
      //ASIGNAR TRABAJOS   
         case 10:
+            
 
-            imageMode(CORNER);
+            switch(cargo){
+                case 'mercadotecnia':
+                    image(cargoMercadotecnia, 0, 0);
+                    break;
+                
+                case 'calidad':
+                    image(cargoCalidad, 0, 0);
+                    break;
+
+                case 'administrativo':
+                    image(cargoAdmin, 0, 0);
+                    break;
+
+                case 'produccion':
+                    image(cargoProduccion, 0, 0);
+                    break;
+
+                case 'original':
+                    image(cargoFondo, 0, 0);
+                    break;
+            }
+            /*imageMode(CORNER);
             image(backgroundJobs, 0, 0);
             image(davidCargo, 200, 160);
             image(camilaCargo, 396, 160);
             image(estefaniaCargo, 623, 160);
             image(jhonCargo, 847, 160);
             image(luisCargo, 1052, 160);
-            image(cargos, 0, 300);
+            image(cargos, 0, 300);*/
             break;
         //CONFIRMACIÓN
         case 11:
@@ -243,7 +276,7 @@ function draw() {
     }
 
     fill(0);
-    //text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
+    text('X: '+mouseX+'Y: '+mouseY,mouseX,mouseY);
     //ubicacion de los botones
     mouseMoved();
 
@@ -318,10 +351,27 @@ function mouseClicked() {
 
         case 10:
             if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) pantalla = 13;
+            if(mouseX > 128 && mouseX < 342 && mouseY > 458 && mouseY < 604){
+                console.log('hola');
+                cargo = 'mercadotecnia';
+            }
+            if(mouseX > 402 && mouseX < 616 && mouseY > 458 && mouseY < 602){
+                cargo = 'calidad';
+            }
+            if(mouseX > 676 && mouseX < 890 && mouseY > 458 && mouseY < 604){
+                cargo = 'administrativo';
+            }
+            if(mouseX > 950 && mouseX < 1166 && mouseY > 458 && mouseY < 604){
+                cargo = 'produccion';
+            }
+            if(mouseX > 536 && mouseX < 742 && mouseY > 520 && mouseY < 596){
+                cargo = 'original';
+            }
             break;
 
         case 11:
             if (mouseX > 378 && mouseX < 586 && mouseY > 359 && mouseY < 434) pantalla = 7;
+            if(mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) pantalla = 10;
             if (mouseX > 672 && mouseX < 877 && mouseY > 359 && mouseY < 434) matchArqueotipo();
             break;
 
@@ -424,6 +474,28 @@ function mouseMoved() {
     }
 
     if (pantalla == 9) if (mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118) image(EquisNormal, 1184, 95);
+
+    if(pantalla == 10){
+        if(pmouseX > 540 && mouseX < 744 && mouseY > 626 && mouseY < 700){
+            image(btnContratar, 527, 621);  
+        }
+    
+        if(mouseX > 536 && mouseX < 742 && mouseY > 520 && mouseY < 596){
+            if(cargo == 'mercadotecnia' || cargo == 'calidad' || cargo == 'administrativo' || cargo == 'produccion'){
+                image(okBtn,526,520);
+            }
+        }
+    }
+    
+
+    if(pantalla == 11){
+        if(mouseX > 380, mouseX < 585 && mouseY > 360 && mouseY < 434) {
+            image(btnVolver, 370, 358);
+        }
+        if(mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434){
+            image(btnConfirmar, 663, 358);
+        }
+    } 
 
 }
 
