@@ -1,7 +1,7 @@
 
-let pantalla = 10;
+let pantalla = 0;
 let postulante;
-let cargo = 'original'
+let cargo = 'original';
 
 let characters = [];
 
@@ -19,19 +19,34 @@ let centinela;
 let explorador;
 
 let timer;
-let counter = 240;
+let counter = 420;
 let seconds, minutes;
+
+let send = false;
+let wrong = false;
+let timeAd = false;
+let locked = false;
+let nivel2 = false;
+
 
 function setup() {
 
     createCanvas(1280, 720);
+    addCharacters();
+    preload();
+}
 
+function addCharacters(){
+
+    if(pantalla === 10){
+        characters.splice(0);
+    }
     characters.push(new Personaje1(279, 281, false));
     characters.push(new Personaje2(457, 281, false));
     characters.push(new Personaje3(635, 281, false));
     characters.push(new Personaje4(813, 281, false));
     characters.push(new Personaje5(995, 281, false));
-    preload();
+    
 }
 
 function preload() {
@@ -60,7 +75,7 @@ function preload() {
     luisInfo = loadImage('resources/Luis.png');
     btnVolver = loadImage('resources/btnVolver.png');
     btnConfirmar = loadImage('resources/confirmar.png');
-    cargoFondo = loadImage('resources/cargoFondo.png');
+    cargoFondo = loadImage('resources/fondoTrabajo.png');
     okBtn = loadImage('resources/okBtn.png');
 
     cargoAdmin = loadImage('resources/cargoAdmin.png');
@@ -68,11 +83,12 @@ function preload() {
     cargoMercadotecnia = loadImage('resources/cargoMerca.png');
     cargoProduccion = loadImage('resources/cargoProd.png');
 
-    backgroundImag = loadImage('resources/fondo.png');
+    backgroundArquetipo = loadImage('resources/fondoArquetipo.png');
     backgroundJobs = loadImage('resources/fondoCargo.png');
     boxes = loadImage('resources/arqueotiposcasillas.png');
     buttonContinue = loadImage('resources/botonOscuro.png');
     buttonContinue2 = loadImage('resources/botonClaro.png');
+    buttonEntendido = loadImage('resources/botonEntendido.png');
     EquisNormal = loadImage('resources/EquisNormal.png');
     EquisPresionado = loadImage('resources/EquisPresionado.png');
     btnContratar = loadImage('resources/contratarBtn.png');
@@ -102,6 +118,21 @@ function preload() {
     thanks = loadImage('resources/fondoFinal.png');
     confirmation = loadImage('resources/Confirmacion.png');
     bug = loadImage('resources/Error.png');
+
+    camilaCarnet = loadImage('resources/CamilaCarnet.png');
+    davidCarnet = loadImage('resources/DavidCarnet.png');
+    estefaniaCarnet = loadImage('resources/EstefaniaCarnet.png');
+    jhonCarnet = loadImage('resources/JhonCarnet.png');
+    luisCarnet = loadImage('resources/LuisCarnet.png');
+
+    camila = loadImage('resources/CamilaCompleta.png');
+    david = loadImage('resources/DavidCompleto.png');
+    estefania = loadImage('resources/EstefaniaCompleta.png');
+    jhon = loadImage('resources/JhonCompleta.png');
+    luis = loadImage('resources/LuisCompleto.png');
+    carnetMesa = loadImage('resources/mesa.png');
+    carnets = loadImage('resources/carnet.png');
+    avisoTiempo = loadImage('resources/avisoTiempo.png');
 
 }
 
@@ -141,13 +172,21 @@ function draw() {
 
         case 7:
             imageMode(CORNER);
-            image(backgroundImag, 0, 0);
+            image(backgroundArquetipo, 0, 0);
             image(boxes, 235, 421);
-            image(signboard, 335, 28);
-            image(optionsButton, 36, 35);
 
             for (let i = 0; i < characters.length; i++) {
                 characters[i].pintar();
+            }
+
+            if(send){
+                imageMode(CORNER);
+                image(confirmation, 0, 0);
+            }
+
+            if(wrong){
+                imageMode(CORNER);
+                image(bug, 0, 0);
             }
 
             break;
@@ -191,8 +230,18 @@ function draw() {
 
      //ASIGNAR TRABAJOS   
         case 10:
-            
+            imageMode(CORNER);
+            nivel2 = true;
+            image(cargoFondo, 0, 0);
+            image(carnetMesa,0,437);
+            image(carnets,123,452);
+            for (let i = 0; i < characters.length; i++) {
+                characters[i].jobs();
+            }
 
+            imageMode(CORNER);
+
+            
             switch(cargo){
                 case 'mercadotecnia':
                     image(cargoMercadotecnia, 0, 0);
@@ -211,49 +260,38 @@ function draw() {
                     break;
 
                 case 'original':
-                    image(cargoFondo, 0, 0);
                     break;
             }
-            /*imageMode(CORNER);
-            image(backgroundJobs, 0, 0);
-            image(davidCargo, 200, 160);
-            image(camilaCargo, 396, 160);
-            image(estefaniaCargo, 623, 160);
-            image(jhonCargo, 847, 160);
-            image(luisCargo, 1052, 160);
-            image(cargos, 0, 300);*/
+
+            if(send){
+                imageMode(CORNER);
+                image(confirmation, 0, 0);
+            }
+
+            if(wrong){
+                imageMode(CORNER);
+                image(bug, 0, 0);
+            }
             break;
-        //CONFIRMACIÓN
         case 11:
             imageMode(CORNER);
-            image(confirmation, 0, 0);
-            break;
-
-        //ERROR
-
-        case 12:
-            image(bug, 0, 0);
-            break;
-
-        case 13:
-            imageMode(CORNER);
             image(thanks, 0, 0);
+            
             break;
-
-
-        case 14:
+        case 12:
             image(summary, 0, 0);
             fill(0);
             textSize(28);
             totalErrores = erroresNivel1+erroresNivel2;
             totalRepeticiones = repeticionesNivel1+repeticionesNivel2;
             text("Errores Nivel 1: "+erroresNivel1, 680, 294);
-            text("Errores Nivel 2: "+erroresNivel1, 680, 339);
+            text("Errores Nivel 2: "+erroresNivel2, 680, 339);
             text("Total errores: "+totalErrores,680,384);
             text("Repeticiones Nivel 1: "+repeticionesNivel1,680,429);
             text("Repeticiones Nivel 2: "+repeticionesNivel2,680,474);
             text("Total Repeticiones: "+totalRepeticiones,680,519);
             break;
+
 
     }
 
@@ -272,7 +310,17 @@ function draw() {
         if (pantalla === 7) {
             matchArqueotipo();
         }
-        pantalla = 13;
+        pantalla = 12;
+    }
+
+    if (minutes === 6 && seconds === 0) {
+        timeAd = true;
+        locked = true;
+    }
+
+    if(timeAd){
+        imageMode(CORNER);
+        image(avisoTiempo,0,0);
     }
 
     fill(0);
@@ -336,23 +384,81 @@ function mouseClicked() {
             break;
 
         case 7:
+            if(!locked){
             if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) pantalla = 8;
             if (mouseX > 36 && mouseX < 197 && mouseY > 108 && mouseY < 168) pantalla = 9;
-            if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) pantalla = 11;
+            } 
+            if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) send = true;
+            
+            if(send){
+                if (mouseX > 378 && mouseX < 586 && mouseY > 359 && mouseY < 434) {
+                    pantalla = 7;
+                    send = false;                
+                }
+                if(mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) {
+                    matchArqueotipo();
+                    send = false;                
+                }
+            }
+
+            if(wrong){
+                if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620){
+                    repeticionesNivel1 += 1;
+                    pantalla = 7;
+                    wrong = false;
+                } 
+            }
             break;
 
         case 8:
-            if (mouseX > 1030 && mouseX < 1235 && mouseY > 622 && mouseY < 698) pantalla = 7;
+            if (mouseX > 1030 && mouseX < 1235 && mouseY > 622 && mouseY < 698){
+                if(!nivel2){
+                    pantalla = 7;
+                }else {
+                    pantalla = 10;
+                }
+            }
+            
             break;
 
         case 9:
-            if (mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118) pantalla = 7;
+            if (mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118) {
+                if(!nivel2){
+                    pantalla = 7;
+                }else {
+                    pantalla = 10;
+                }
+            }
+
             break;
 
         case 10:
-            if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) pantalla = 13;
+
+            if(!locked){
+                if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) pantalla = 8;
+                if (mouseX > 36 && mouseX < 197 && mouseY > 108 && mouseY < 168) pantalla = 9;
+            } 
+            if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) send = true;
+            
+            if(send){
+                if (mouseX > 378 && mouseX < 586 && mouseY > 359 && mouseY < 434) {
+                    pantalla = 10;
+                    send = false;                
+                }
+                if(mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) {
+                    matchJobs();
+                    send = false;                
+                }
+            }
+
+            if(wrong){
+                if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620){
+                    repeticionesNivel1 += 1;
+                    pantalla = 10;
+                    wrong = false;
+                } 
+            }
             if(mouseX > 128 && mouseX < 342 && mouseY > 458 && mouseY < 604){
-                console.log('hola');
                 cargo = 'mercadotecnia';
             }
             if(mouseX > 402 && mouseX < 616 && mouseY > 458 && mouseY < 602){
@@ -370,21 +476,18 @@ function mouseClicked() {
             break;
 
         case 11:
-            if (mouseX > 378 && mouseX < 586 && mouseY > 359 && mouseY < 434) pantalla = 7;
-            if(mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) pantalla = 10;
-            if (mouseX > 672 && mouseX < 877 && mouseY > 359 && mouseY < 434) matchArqueotipo();
+            if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) pantalla = 12;  
             break;
 
         case 12:
-            if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620){
-                repeticionesNivel1 += 1;
-                pantalla = 7;
-            } 
+            pantalla = 0;
             break;
 
-        case 13:
-            if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) pantalla = 14;
-            break;
+    }
+
+    if(timeAd){
+        if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620) timeAd = false; 
+        
     }
 
 }
@@ -412,19 +515,12 @@ function mouseMoved() {
         if (mouseX > 520 && mouseX < 735 && mouseY > 600 && mouseY < 675) image(btnEmpezarNormal, 525, 603);
     }
     if (pantalla == 7) {
-        if (mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY < 700) {
-            image(buttonContinue2, 640, 670);
-        } else {
-            image(buttonContinue, 640, 670);
-        }
 
-        if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) {
-            image(candidatesButton, 118, 64);
-        }
+            if (mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY < 700) image(buttonContinue2, 640, 670);
+        
+            if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) image(candidatesButton, 118, 64);
 
-        if (mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY < 165) {
-            image(ArchetypeButton, 117, 135);
-        }
+            if (mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY < 165) image(ArchetypeButton, 117, 135);
     }
 
     if (pantalla == 8) {
@@ -476,26 +572,37 @@ function mouseMoved() {
     if (pantalla == 9) if (mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118) image(EquisNormal, 1184, 95);
 
     if(pantalla == 10){
-        if(pmouseX > 540 && mouseX < 744 && mouseY > 626 && mouseY < 700){
-            image(btnContratar, 527, 621);  
-        }
+        if(mouseX > 540 && mouseX < 744 && mouseY > 626 && mouseY < 700) image(btnContratar, 527, 621);  
     
         if(mouseX > 536 && mouseX < 742 && mouseY > 520 && mouseY < 596){
             if(cargo == 'mercadotecnia' || cargo == 'calidad' || cargo == 'administrativo' || cargo == 'produccion'){
                 image(okBtn,526,520);
             }
         }
+imageMode(CENTER);
+        if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) image(candidatesButton, 118, 64);
+
+        if (mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY < 165) image(ArchetypeButton, 117, 135);
+        
+
     }
     
 
-    if(pantalla == 11){
+    if(send){
         if(mouseX > 380, mouseX < 585 && mouseY > 360 && mouseY < 434) {
             image(btnVolver, 370, 358);
         }
         if(mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434){
             image(btnConfirmar, 663, 358);
         }
-    } 
+    }
+
+    if(wrong){
+        if(mouseX > 538, mouseX < 739 && mouseY > 545 && mouseY < 620) {
+            image(buttonEntendido, 528, 545);
+        }
+
+    }
 
 }
 
@@ -510,17 +617,27 @@ function mouseDragged() {
 
     }
 
+    if (pantalla === 10) {
+
+        for (let i = 0; i < characters.length; i++) {
+
+            characters[i].dragJob();
+        }
+
+    }
+
 }
 
 function mouseReleased() {
 
-    if (pantalla === 7) {
+    if (pantalla === 7 || pantalla === 10) {
         for (let i = 0; i < characters.length; i++) {
             characters[i].nodrag();
         }
 
     }
 }
+
 function matchArqueotipo() {
 
     for (let i = 0; i < characters.length; i++) {
@@ -569,20 +686,88 @@ function matchArqueotipo() {
 
     }
 
-    if (!analista) errores += 1;
-    if (!diplomatico) errores += 1;
-    if (!centinela) errores += 1;
-    if (!explorador) errores += 1;
-    if (!prueba) errores += 1;
+    if (!analista) erroresNivel1 += 1;
+    if (!diplomatico) erroresNivel1 += 1;
+    if (!centinela) erroresNivel1 += 1;
+    if (!explorador) erroresNivel1 += 1;
+    if (!prueba) erroresNivel1 += 1;
 
 
-    if (!analista || !diplomatico || !explorador || !explorador || !prueba) {
-        pantalla = 12;
-        console.log("Numero de errores: " + errores);
+    if (!analista || !diplomatico || !explorador || !centinela || !prueba) {
+        wrong = true;
+        console.log("Numero de erroresNivel1: " + erroresNivel1);
     } else {
         pantalla = 10;
+        addCharacters();
     }
 }
+
+function matchJobs() {
+
+
+    for (let i = 0; i < characters.length; i++) {
+        console.log(i);
+
+        //Luis Ninguno 
+        if (characters[1].getPosX() > 375 && characters[1].getPosX() < 538 && characters[1].getPosY() > 181 && characters[1].getPosY() < 383) {
+            prueba = true;
+
+        } else {
+            prueba = false;
+        }
+        // Estefania ANALISTA
+        if (characters[4].getPosX() > 951 && characters[4].getPosX() < 1165 && characters[4].getPosY() > 496 && characters[4].getPosY() < 660) {
+            analista = true;
+
+        } else {
+            analista = false;
+        }
+
+        // David INSPECTOR DE CALIDAD
+
+        if (characters[0].getPosX() > 402 && characters[0].getPosX() < 615 && characters[0].getPosY() > 496 && characters[0].getPosY() < 660) {
+            diplomatico = true;
+
+        } else {
+            diplomatico = false;
+        }
+
+        //Jhon GERENTE ADMI
+
+        if (characters[3].getPosX() > 677 && characters[3].getPosX() < 890 && characters[3].getPosY() > 496 && characters[3].getPosY() < 660) {
+            centinela = true;
+
+        } else {
+            centinela = false;
+        }
+
+        //Camila MERCADOTECNIA
+
+        if (characters[2].getPosX() > 128 && characters[2].getPosX() < 341 && characters[2].getPosY() > 341 && characters[2].getPosY() < 660) {
+            explorador = true;
+
+        } else {
+            explorador = false;
+        }
+
+    }
+    console.log("entre"+analista+diplomatico+explorador+centinela+prueba);
+
+    if (!analista) erroresNivel2 += 1;
+    if (!diplomatico) erroresNivel2 += 1;
+    if (!centinela) erroresNivel2 += 1;
+    if (!explorador) erroresNivel2 += 1;
+    if (!prueba) erroresNivel2 += 1;
+
+
+    if (!analista || !diplomatico || !explorador || !centinela || !prueba) {
+        wrong = true;
+        console.log("Numero de erroresNivel2: " + erroresNivel2);
+    } else {
+        pantalla = 11;
+    }
+}
+
 function timeIt() {
     if (counter > 0) {
         counter--;

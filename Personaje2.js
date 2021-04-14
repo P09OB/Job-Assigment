@@ -21,9 +21,23 @@ class Personaje2 extends Character {
 
     }
 
+    jobs(){
+        imageMode(CENTER);
+
+        if (!this.overBox) {
+            image(luis, this.posx, this.posy+45);
+
+        } else {
+
+            image(luisCarnet, this.posx, this.posy);
+        }
+
+    }
+
+
     nodrag() {
 
-        if (this.posx > 237 && this.posx < 1042 && this.posy > 406 && this.posy < 596) {
+        if (this.posx > 128 && this.posx < 1165 && this.posy > 496 && this.posy < 600) {
 
             this.overBox = true;
 
