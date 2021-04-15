@@ -26,7 +26,7 @@ class Personaje4 extends Character {
 
 
         if (!this.overBox) {
-            image(jhon, this.posx, this.posy+45);
+            image(jhon, this.posx, this.posy+27);
 
         } else {
 
@@ -43,7 +43,7 @@ class Personaje4 extends Character {
 
         } else {
             this.overBox = false;
-            this.posx = 813;
+            this.posx = 733;
             this.posy = 281;
 
         }

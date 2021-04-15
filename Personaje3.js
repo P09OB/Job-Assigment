@@ -25,7 +25,7 @@ class Personaje3 extends Character {
         imageMode(CENTER);
 
         if (!this.overBox) {
-            image(camila, this.posx, this.posy+45);
+            image(camila, this.posx, this.posy+27);
 
         } else {
 
@@ -42,7 +42,7 @@ class Personaje3 extends Character {
 
         } else {
             this.overBox = false;
-            this.posx = 635;
+            this.posx = 554;
             this.posy = 281;
 
         }

@@ -25,7 +25,7 @@ class Personaje1 extends Character {
         imageMode(CENTER);
 
             if (!this.overBox) {
-                image(david, this.posx, this.posy+45);
+                image(david, this.posx, this.posy+27);
     
             } else {
     
@@ -42,8 +42,8 @@ class Personaje1 extends Character {
 
         } else {
             this.overBox = false;
-            this.posx = 281;
-            this.posy = 279;
+            this.posx = 377;
+            this.posy = 281;
 
         }
 
