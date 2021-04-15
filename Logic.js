@@ -85,6 +85,7 @@ class Logic {
     
         if (!analista || !diplomatico || !explorador || !centinela) {
             console.log("Numero de erroresNivel2: " + erroresNivel2);
+            pantalla = 15;
         } else {
             pantalla = 15;
         }
