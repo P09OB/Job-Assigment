@@ -18,7 +18,7 @@ let centinela = false;
 let explorador = false;
 
 let timer;
-let counter = 60;
+let counter = 300;
 let seconds, minutes;
 let tiempo;
 
@@ -30,6 +30,9 @@ let nivel2 = false;
 let nivel1 = false;
 let start = true;
 let btnLocked = false;
+let zoneAdmi = false;
+let finish = false;
+let validar = true;
 let estado = '';
 let logic = new Logic();
 
@@ -48,6 +51,7 @@ function preload() {
     fondoInstrucciones = loadImage('resources/instrucciones.png');
     fondoCandidatos = loadImage('resources/FondoCandidatos.png');
     fondoArquetipo = loadImage('resources/fondoArquetipo.png');
+    fondoTiempo = loadImage('resources/tiempoAgotado.png');
 
     instruccionGeneral = loadImage('resources/instruccionesGeneral.png');
     instruccionTiempo = loadImage('resources/instruccionesTiempo.png');
@@ -69,6 +73,9 @@ function preload() {
     btnContratar = loadImage('resources/contratarBtn.png');
     btnInfo = loadImage('resources/btnInfo.png');
     btnResultados = loadImage('resources/btnResultados.png');
+    btnContratar2 = loadImage('resources/btnContratarGris.png');
+    btnContinuar2 = loadImage('resources/btnContinuarGris.png');
+    btnFinalizar = loadImage('resources/btnFinalizar.png');
 
     btnArquetipo = loadImage('resources/BotonArqueotipo.png');
     btnCandidatos = loadImage('resources/botonCandidatos.png');
@@ -205,8 +212,13 @@ function draw() {
             image(fondoArquetipo, 0, 0);
             nivel1 = true;
             image(boxes, 235, 421);
+            logic.zone();
+            if(!zoneAdmi){
+                image(btnContinuar2,527, 625);
+            }
             logic.paintCharacter();
             fill(255, 0, 0);
+            noStroke();
             text("Errores : " + erroresNivel1, 1085, 130);
             break;
         //RESUMEN ARQUETIPO
@@ -226,7 +238,10 @@ function draw() {
             image(carnets, 123, 452);
             logic.paint2Character();
             imageMode(CORNER);
-
+            logic.zone();
+            if(!zoneAdmi){
+                image(btnContratar2,527, 617);
+            }
             if (send) {
                 imageMode(CORNER);
                 image(confirmation, 0, 0);
@@ -309,7 +324,7 @@ function mouseClicked() {
 
                 if (mouseX > 36 && mouseX < 197 && mouseY > 108 && mouseY < 168) pantalla = 12;
             }
-            if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) send = true;
+            if(zoneAdmi)if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) send = true;
 
             if (send) {
                 if (mouseX > 378 && mouseX < 586 && mouseY > 359 && mouseY < 434) {
@@ -322,11 +337,12 @@ function mouseClicked() {
                         wrong = true;
                     } else {
                         let operacion = erroresNivel1 * 10;
-                        if(puntaje1 <= 10){
+                        if(erroresNivel1 <= 10){
                             puntaje1 -= operacion;
                         } else{
                             puntaje1 = 0;
                         }
+                        zoneAdmi = false;
                         pantalla = 13;
                         nivel1 = false;
                     }
@@ -362,19 +378,32 @@ function mouseClicked() {
                 if (mouseX > 36 && mouseX < 197 && mouseY > 108 && mouseY < 168) pantalla = 12;
             }
             if (btnLocked) {
-                if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) send = true;
+                if(zoneAdmi) if (mouseX > 538 && mouseX < 742 && mouseY > 625 && mouseY < 699) send = true;
                 if (send) {
                     if (mouseX > 378 && mouseX < 586 && mouseY > 359 && mouseY < 434) {
                         pantalla = 14;
                         send = false;
                     }
                     if (mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) {
-                        logic.matchJobs();
+                        if (!zoneAdmi) {
+                            wrong = true;
+                            send = false;
+
+                        } else{
+                            logic.matchJobs();
                         estado = "COMPLETADO";
                         start = false;
                         send = false;
                         nivel2 = false;
+
+                        } 
                     }
+                }
+            }
+            if (wrong) {
+                if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620) {
+                    pantalla = 14;
+                    wrong = false;
                 }
             }
 
@@ -414,14 +443,6 @@ function mouseClicked() {
         case 16:
             //Reiniciar valores 
 
-            logic.addCharacters();
-            erroresNivel1 = 0;
-            erroresNivel2 = 0;
-            totalErrores = 0;
-            repeticionesNivel1 = 0;
-            repeticionesNivel2 = 0;
-            totalRepeticiones = 0;
-
             break;
     }
 
@@ -429,6 +450,28 @@ function mouseClicked() {
         if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620) timeAd = false;
 
     }
+    if(finish){
+        if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620){
+            validar = false;
+            finish = false;
+        if (nivel1) {
+            let operacion = erroresNivel1 * 10;
+                if(erroresNivel1 <= 10){
+                    puntaje1 -= operacion;
+                } else{
+                    puntaje1 = 0;
+                }
+                estado = "TIEMPO TERMINADO";
+        }
+        if (nivel2 ){
+            logic.matchJobs();
+            estado = "TIEMPO TERMINADO";
+        }
+        pantalla = 15;
+
+        } 
+    }
+
 }
 
 function mouseMoved() {
@@ -477,7 +520,7 @@ function mouseMoved() {
         case 10:
             break;
         case 11:
-            if (mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY < 700) image(btnContinuar, 640, 670);
+            if(zoneAdmi) if (mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY < 700) image(btnContinuar, 640, 670);
             if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) image(btnCandidatos, 118, 64);
             if (mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY < 165) image(btnArquetipo, 117, 135);
             break;
@@ -488,7 +531,7 @@ function mouseMoved() {
             break;
         case 14:
             imageMode(CORNER);
-            if (mouseX > 540 && mouseX < 744 && mouseY > 626 && mouseY < 700) image(btnContratar, 527, 617);
+            if(zoneAdmi) if (mouseX > 540 && mouseX < 744 && mouseY > 626 && mouseY < 700) image(btnContratar, 527, 617);
             if (mouseX > 36 && mouseX < 197 && mouseY > 35 && mouseY < 82) image(btnCandidatos, 36, 35);
             if (mouseX > 36 && mouseX < 197 && mouseY > 106 && mouseY < 165) image(btnArquetipo, 34, 106);
             if (mouseX > 282 && mouseX < 320 && mouseY > 553 && mouseY < 587) image(btnInfo, 270, 546);
@@ -569,23 +612,11 @@ function timeIt() {
 
 function time() {
     //TERMINO EL TIEMPO
+    if(validar){
     if (minutes === 0 && seconds === 0) {
-        /*
-        if (pantalla === 11 || nivel1) {
-            let operacion = erroresNivel1 * 10;
-                if(puntaje1 <= 10){
-                    puntaje1 -= operacion;
-                } else{
-                    puntaje1 = 0;
-                }
-                estado = "TIEMPO TERMINADO";
-        }
-        if (pantalla === 14 || nivel2 ){
-            logic.matchJobs();
-            estado = "TIEMPO TERMINADO";
-        }*/
-        pantalla = 16;
+        finish = true;
     }
+}
     //FALTAN 5 MINUTOS
 
     if (minutes === 1 && seconds === 0) {
@@ -685,6 +716,12 @@ function ad() {
         }
     }
 
+    if(finish){
+        image(fondoTiempo,0,0);
+        if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620) image(btnFinalizar,530,545);
+
+    }
+
     imageMode(CORNER);
     if (timeAd) {
         image(avisoTiempo, 0, 0);
@@ -702,13 +739,12 @@ function results(){
     totalErrores = erroresNivel1 + erroresNivel2;
     totalPuntaje = puntaje1 + puntaje2;
     tiempo = counter;
+    
+    text(totalErrores, 629, 381);
+    text(totalPuntaje+"/200", 496, 281);
+    text(minutes+" : "+seconds,589,481);
 
-    text("Errores: " + totalErrores, 680, 294);
-    text("Puntaje: " + totalPuntaje+"/200", 680, 339);
-    text("Tiempo: "+minutes+" : "+seconds,680,385);
-    text("Repeticiones Nivel1: " + repeticionesNivel1, 680, 429);
-    text("Estado: "+estado,680,500);
-    console.log(counter);
-
+    //text("Repeticiones Nivel1: " + repeticionesNivel1, 680, 429);
+    //text("Estado: "+estado,680,500);
 }
 

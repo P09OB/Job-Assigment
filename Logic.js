@@ -88,8 +88,6 @@ class Logic {
 
 
         for (let i = 0; i < characters.length; i++) {
-            console.log(i);
-    
             
             // Estefania ANALISTA
             if (characters[3].getPosX() > 951 && characters[3].getPosX() < 1165 && characters[3].getPosY() > 496 && characters[3].getPosY() < 660) {
@@ -151,6 +149,28 @@ class Logic {
         
         pantalla = 15;
     }
+
+    zone(){
+        for (let i = 0; i < characters.length; i++) {
+
+        if (characters[i].getPosX() > 127 && characters[i].getPosX() < 1165 && characters[i].getPosY() > 496 && characters[i].getPosY() < 660) {
+            zoneAdmi = true;
+        } else {
+            zoneAdmi = false;
+        }
+    }
+    }
+    zoneArqueotipo(){
+        for (let i = 0; i < characters.length; i++) {
+
+            if (characters[i].getPosX() > 235 && characters[i].getPosX() < 1045 && characters[i].getPosY() > 437 && characters[i].getPosY() < 596) {
+                zoneAdmi = true;
+            } else {
+                zoneAdmi = false;
+            }
+        }
+    }
+
 
      select(state, x){
         postulante = state;
