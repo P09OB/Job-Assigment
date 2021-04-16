@@ -8,15 +8,12 @@ class Character{
         
     }
 
-    zone(){
-
-    }
-
     dragged(){
         if(mouseX > 160 && mouseX < 1046 && mouseY >0 && mouseY <670){
             if(dist(this.posx,this.posy,mouseX,mouseY)<78) {
                 this.posx= mouseX;
                 this.posy= mouseY;
+
               }
 
         }
@@ -54,4 +51,8 @@ class Character{
     getPosY(){
         return this.posy;
     }
+    getoverBox(){
+        return this.overBox;
+    }
+    
 }

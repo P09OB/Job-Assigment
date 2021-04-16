@@ -31,6 +31,8 @@ class Personaje4 extends Character {
         } else {
 
             image(jhonCarnet, this.posx, this.posy);
+            this.posicion = 3;
+
         }
 
     }

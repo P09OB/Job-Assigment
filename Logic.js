@@ -32,6 +32,58 @@ class Logic {
         
     }
 
+    matchArqueotipo(){
+        if (pantalla === 11) {
+
+            if (mouseX > 235 && mouseX < 1045 && mouseY > 447 && mouseY < 596) {
+                for (let i = 0; i < characters.length; i++) {
+                    if (posicion === 1) {
+                        if (characters[0].getPosX() > 442 && characters[0].getPosX() < 626 && characters[0].getPosY() > 421 && characters[0].getPosY() < 596) {
+                            diplomatico = true;
+    
+                        } else {
+                            diplomatico = false;
+                        }
+                    }
+                    if (posicion === 2) {
+                        if (characters[1].getPosX() > 861 && characters[1].getPosX() < 1045 && characters[1].getPosY() > 421 && characters[1].getPosY() < 596) {
+                            explorador = true;
+                        } else {
+                            explorador = false;
+                        }
+                    }
+                    if (posicion === 3) {
+                        if (characters[2].getPosX() > 652 && characters[2].getPosX() < 832 && characters[2].getPosY() > 421 && characters[2].getPosY() < 596) {
+                            centinela = true;
+                        } else {
+                            centinela = false;
+                        }
+                    }
+                    if (posicion === 4) {
+                        if (characters[3].getPosX() > 235 && characters[3].getPosX() < 418 && characters[3].getPosY() > 421 && characters[3].getPosY() < 596) {
+                            analista = true;
+                        } else {
+                            analista = false;
+                        }
+                    }
+                }
+                if (posicion === 1) {
+                    if (!diplomatico) erroresNivel1 += 1; posicion = 0;
+                }
+                if (posicion === 2) {
+                    if (!explorador) erroresNivel1 += 1; posicion = 0;
+                }
+                if (posicion === 3) {
+                    if (!centinela) erroresNivel1 += 1; posicion = 0;
+                }
+                if (posicion === 4) {
+                    if (!analista) erroresNivel1 += 1; posicion = 0;
+                }
+            }
+    
+        }
+    }
+
     matchJobs() {
 
 
@@ -75,78 +127,31 @@ class Logic {
             }
     
         }
-    
-    
-        if (!analista) erroresNivel2 += 1;
-        if (!diplomatico) erroresNivel2 += 1;
-        if (!centinela) erroresNivel2 += 1;
-        if (!explorador) erroresNivel2 += 1;
-    
-    
-        if (!analista || !diplomatico || !explorador || !centinela) {
-            console.log("Numero de erroresNivel2: " + erroresNivel2);
-            pantalla = 15;
+
+        if (!analista) {
+            erroresNivel2 += 1;
         } else {
-            pantalla = 15;
+            puntaje2 += 25;
+        } 
+        if (!diplomatico) {
+            erroresNivel2 += 1;
+        } else {
+            puntaje2 += 25;
+        } 
+        if (!centinela) {
+            erroresNivel2 += 1;
+        } else {
+            puntaje2 += 25;
+        } 
+        if (!explorador) {
+            erroresNivel2 += 1;
+        } else {
+            puntaje2 += 25;
         }
-    }
-
-     matchArqueotipo() {
-
-        for (let i = 0; i < characters.length; i++) {
-    
         
-            // Estefania ANALISTA
-            if (characters[3].getPosX() > 235 && characters[3].getPosX() < 418 && characters[3].getPosY() > 421 && characters[3].getPosY() < 596) {
-                analista = true;
-    
-            } else {
-                analista = false;
-            }
-    
-            // David DIPLOMATICO
-    
-            if (characters[0].getPosX() > 442 && characters[0].getPosX() < 626 && characters[0].getPosY() > 421 && characters[0].getPosY() < 596) {
-                diplomatico = true;
-    
-            } else {
-                diplomatico = false;
-            }
-    
-            //Jhon CENTINELA
-    
-            if (characters[2].getPosX() > 652 && characters[2].getPosX() < 836 && characters[2].getPosY() > 421 && characters[2].getPosY() < 596) {
-                centinela = true;
-    
-            } else {
-                centinela = false;
-            }
-    
-            //Camila EXPLORADOR
-    
-            if (characters[1].getPosX() > 861 && characters[1].getPosX() < 1045 && characters[1].getPosY() > 421 && characters[1].getPosY() < 596) {
-                explorador = true;
-    
-            } else {
-                explorador = false;
-            }
-    
-        }
-    
-        if (!analista) erroresNivel1 += 1;
-        if (!diplomatico) erroresNivel1 += 1;
-        if (!centinela) erroresNivel1 += 1;
-        if (!explorador) erroresNivel1 += 1;
-    
-    
-        if (!analista || !diplomatico || !explorador || !centinela) {
-            wrong = true;
-            console.log("Numero de erroresNivel1: " + erroresNivel1);
-        } else {
-            pantalla = 13;
-            logic.addCharacters();
-        }
+        pantalla = 15;
     }
+
      select(state, x){
         postulante = state;
         noFill();

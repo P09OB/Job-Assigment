@@ -17,6 +17,8 @@ class Personaje5 extends Character {
         } else {
 
             image(ESmallCircle, this.posx, this.posy);
+            this.posicion = 4;
+
         }
 
     }
@@ -46,7 +48,6 @@ class Personaje5 extends Character {
             this.posy = 281;
 
         }
-
     }
 
 }

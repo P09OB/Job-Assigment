@@ -8,17 +8,19 @@ let erroresNivel1 = 0;
 let erroresNivel2 = 0;
 let totalErrores = 0;
 let repeticionesNivel1 = 0;
-let repeticionesNivel2 = 0;
-let totalRepeticiones = 0;
+let puntaje1 = 100;
+let puntaje2 = 0;
+let totalPuntaje = 0;
 
 let analista;
 let diplomatico;
-let centinela;
-let explorador;
+let centinela = false;
+let explorador = false;
 
 let timer;
-let counter = 420;
+let counter = 60;
 let seconds, minutes;
+let tiempo;
 
 let send = false;
 let wrong = false;
@@ -28,6 +30,7 @@ let nivel2 = false;
 let nivel1 = false;
 let start = true;
 let btnLocked = false;
+let estado = '';
 let logic = new Logic();
 
 
@@ -203,7 +206,8 @@ function draw() {
             nivel1 = true;
             image(boxes, 235, 421);
             logic.paintCharacter();
-
+            fill(255, 0, 0);
+            text("Errores : " + erroresNivel1, 1085, 130);
             break;
         //RESUMEN ARQUETIPO
         case 12:
@@ -223,12 +227,6 @@ function draw() {
             logic.paint2Character();
             imageMode(CORNER);
 
-            if (locked) {
-                imageMode(CORNER);
-                image(candidatosBloqueado, 37, 35);
-                image(arqueotiposBloqueado, 36, 106);
-            }
-
             if (send) {
                 imageMode(CORNER);
                 image(confirmation, 0, 0);
@@ -242,16 +240,8 @@ function draw() {
         //RESULTADOS
         case 16:
             image(summary, 0, 0);
-            fill(0);
-            textSize(28);
-            totalErrores = erroresNivel1 + erroresNivel2;
-            totalRepeticiones = repeticionesNivel1 + repeticionesNivel2;
-            text("Errores Nivel 1: " + erroresNivel1, 680, 294);
-            text("Errores Nivel 2: " + erroresNivel2, 680, 339);
-            text("Total errores: " + totalErrores, 680, 384);
-            text("Repeticiones Nivel 1: " + repeticionesNivel1, 680, 429);
-            text("Repeticiones Nivel 2: " + repeticionesNivel2, 680, 474);
-            text("Total Repeticiones: " + totalRepeticiones, 680, 519);
+            results();
+            
             break;
 
     }
@@ -263,7 +253,6 @@ function draw() {
 }
 
 function mouseClicked() {
-    console.log(pantalla);
     switch (pantalla) {
         case 0:
             if (mouseX > 495 && mouseX < 709 && mouseY > 453 && mouseY < 527) pantalla = 1;
@@ -312,6 +301,7 @@ function mouseClicked() {
             break;
         case 10:
             pantalla = 11;
+            setInterval(timeIt, 1000);
             break;
         case 11:
             if (!locked) {
@@ -327,8 +317,19 @@ function mouseClicked() {
                     send = false;
                 }
                 if (mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) {
-                    logic.matchArqueotipo();
                     send = false;
+                    if (!diplomatico || !analista || !explorador || !centinela) {
+                        wrong = true;
+                    } else {
+                        let operacion = erroresNivel1 * 10;
+                        if(puntaje1 <= 10){
+                            puntaje1 -= operacion;
+                        } else{
+                            puntaje1 = 0;
+                        }
+                        pantalla = 13;
+                        nivel1 = false;
+                    }
                 }
             }
 
@@ -352,8 +353,8 @@ function mouseClicked() {
 
             break;
         case 13:
-            pantalla = 14;
             logic.addCharacters();
+            pantalla = 14;
             break;
         case 14:
             if (!locked) {
@@ -369,7 +370,10 @@ function mouseClicked() {
                     }
                     if (mouseX > 672 && mouseX < 878 && mouseY > 360 && mouseY < 434) {
                         logic.matchJobs();
+                        estado = "COMPLETADO";
+                        start = false;
                         send = false;
+                        nivel2 = false;
                     }
                 }
             }
@@ -403,22 +407,24 @@ function mouseClicked() {
 
             break;
         case 15:
+            
             if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) pantalla = 16;
 
             break;
         case 16:
             //Reiniciar valores 
-            
-                logic.addCharacters();
-                erroresNivel1 = 0;
-                erroresNivel2 = 0;
-                totalErrores = 0;
-                repeticionesNivel1 = 0;
-                repeticionesNivel2 = 0;
-                totalRepeticiones = 0;
-            
+
+            logic.addCharacters();
+            erroresNivel1 = 0;
+            erroresNivel2 = 0;
+            totalErrores = 0;
+            repeticionesNivel1 = 0;
+            repeticionesNivel2 = 0;
+            totalRepeticiones = 0;
+
             break;
     }
+
     if (timeAd) {
         if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620) timeAd = false;
 
@@ -491,7 +497,7 @@ function mouseMoved() {
             if (mouseX > 1106 && mouseX < 1144 && mouseY > 553 && mouseY < 587) image(btnInfo, 1096, 546);
             break;
         case 15:
-            if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) image(btnResultados,530,453);
+            if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) image(btnResultados, 530, 453);
             break;
 
     }
@@ -503,8 +509,23 @@ function mouseDragged() {
     if (pantalla === 11) {
 
         for (let i = 0; i < characters.length; i++) {
-
             characters[i].dragged();
+            //DAVID
+            if (characters[0].getPosX() === mouseX && mouseY) {
+                posicion = 1;
+            }
+            //CAMILA
+            if (characters[1].getPosX() === mouseX && mouseY) {
+                posicion = 2;
+            }
+            //JHON
+            if (characters[2].getPosX() === mouseX && mouseY) {
+                posicion = 3;
+            }
+            //ANALISTA
+            if (characters[3].getPosX() === mouseX && mouseY) {
+                posicion = 4;
+            }
         }
 
     }
@@ -526,8 +547,9 @@ function mouseReleased() {
         for (let i = 0; i < characters.length; i++) {
             characters[i].nodrag();
         }
-
     }
+
+    logic.matchArqueotipo();
 }
 
 function timeIt() {
@@ -539,40 +561,51 @@ function timeIt() {
         }
     }
 
-
-    console.log('conter' + counter);
-
     minutes = floor(counter / 60);
     seconds = counter % 60;
+
 
 }
 
 function time() {
+    //TERMINO EL TIEMPO
     if (minutes === 0 && seconds === 0) {
-        if (pantalla === 7) {
-            logic.matchArqueotipo();
+        /*
+        if (pantalla === 11 || nivel1) {
+            let operacion = erroresNivel1 * 10;
+                if(puntaje1 <= 10){
+                    puntaje1 -= operacion;
+                } else{
+                    puntaje1 = 0;
+                }
+                estado = "TIEMPO TERMINADO";
         }
+        if (pantalla === 14 || nivel2 ){
+            logic.matchJobs();
+            estado = "TIEMPO TERMINADO";
+        }*/
         pantalla = 16;
     }
+    //FALTAN 5 MINUTOS
 
-    if (minutes === 5 && seconds === 0) {
+    if (minutes === 1 && seconds === 0) {
         timeAd = true;
         locked = true;
     }
-    if (minutes >= 2) {
+    if (minutes >= 1) {
         stroke('#CF0909');
         fill('#E13E3E');
 
     }
 
-    if (minutes >= 4) {
+    if (minutes >= 2) {
         stroke('#CF3C09');
         fill('#F47236');
     }
 
-    if (pantalla === 11 || pantalla === 13 || pantalla === 14) {
+    if (pantalla === 11 || pantalla === 13 || pantalla === 14 || (pantalla === 7 && nivel1 || nivel2)) {
         // rectangulo de tiempo
-        if (minutes >= 6) {
+        if (minutes >= 3) {
             strokeWeight(4);
             stroke(255);
             fill('#9AEDFF');
@@ -583,17 +616,19 @@ function time() {
         strokeWeight(3);
         stroke('#276674');
         fill(255);
-        text(minutes + ":" + seconds, 1125, 70);
+        let cero = " ";
+        if (seconds <= 9) {
+            cero = "0";
+        }
+        text(minutes + " " + ":" + cero + seconds, 1118, 70);
     }
 
-    if (timeAd) {
-        imageMode(CORNER);
-        image(avisoTiempo, 0, 0);
-    }
+
+
+
 }
 
 function ad() {
-    imageMode(CORNER);
 
     if (pantalla == 14) {
         switch (cargo) {
@@ -623,10 +658,14 @@ function ad() {
             }
         }
     }
+    imageMode(CORNER);
 
     if (locked) {
-        image(candidatosBloqueado, 37, 35);
-        image(arqueotiposBloqueado, 36, 106);
+        if (pantalla === 14 || pantalla === 11) {
+            image(candidatosBloqueado, 34, 35);
+            image(arqueotiposBloqueado, 34, 106);
+        }
+
     }
 
     if (send) {
@@ -645,6 +684,31 @@ function ad() {
             image(buttonEntendido, 528, 545);
         }
     }
+
+    imageMode(CORNER);
+    if (timeAd) {
+        image(avisoTiempo, 0, 0);
+        if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620) image(buttonEntendido, 528, 547);
+    }
+
+}
+
+function results(){
+
+    fill(0);
+    noStroke();
+    textSize(28);
+
+    totalErrores = erroresNivel1 + erroresNivel2;
+    totalPuntaje = puntaje1 + puntaje2;
+    tiempo = counter;
+
+    text("Errores: " + totalErrores, 680, 294);
+    text("Puntaje: " + totalPuntaje+"/200", 680, 339);
+    text("Tiempo: "+minutes+" : "+seconds,680,385);
+    text("Repeticiones Nivel1: " + repeticionesNivel1, 680, 429);
+    text("Estado: "+estado,680,500);
+    console.log(counter);
 
 }
 

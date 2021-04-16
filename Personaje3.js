@@ -17,6 +17,9 @@ class Personaje3 extends Character {
         } else {
 
             image(CSmallCircle, this.posx, this.posy);
+            this.zone = true;
+
+
         }
 
     }
@@ -35,6 +38,7 @@ class Personaje3 extends Character {
     }
 
     nodrag() {
+        this.zone = true;
 
         if (this.posx > 128 && this.posx < 1165 && this.posy > 496 && this.posy < 600)  {
 
@@ -45,8 +49,7 @@ class Personaje3 extends Character {
             this.posx = 554;
             this.posy = 281;
 
-        }
-
-    }
+        }    }
+    
 
 }
