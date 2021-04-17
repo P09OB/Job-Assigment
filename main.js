@@ -1,5 +1,5 @@
-let pantalla = 13;
-let postulante;
+let pantalla = 0;
+let postulante = 'David';
 let cargo = 'original';
 
 let characters = [];
