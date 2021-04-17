@@ -56,6 +56,8 @@ function preload() {
     instruccionGeneral = loadImage('resources/instruccionesGeneral.png');
     instruccionTiempo = loadImage('resources/instruccionesTiempo.png');
     instruccionOpciones = loadImage('resources/instruccionesOpciones.png');
+    gif1 = loadImage('resources/nuevoGifDef1.gif');
+    gif2 = loadImage('resources/nuevoGifDef2.gif');
 
     //BOTONES
     btoInicio = loadImage('resources/btnInicio1.png');
@@ -205,7 +207,7 @@ function draw() {
         //INSTRUCCIONES DE ARRASTRE
         case 10:
             //GIF
-            background(0);
+            image(gif1, 0, 0,1280, 720);
             break;
         //NIVEL 1 MATCH ARQUETIPO
         case 11:
@@ -227,7 +229,7 @@ function draw() {
             break;
         case 13:
             //GIF2
-            background(255, 0, 0);
+            image(gif2, 0, 0,1280, 720);
             break;
         //NIVEL 2 MATCH TRABAJOS
         case 14:
