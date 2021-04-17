@@ -1,4 +1,4 @@
-let pantalla = 0;
+let pantalla = 13;
 let postulante;
 let cargo = 'original';
 
@@ -56,6 +56,8 @@ function preload() {
     instruccionGeneral = loadImage('resources/instruccionesGeneral.png');
     instruccionTiempo = loadImage('resources/instruccionesTiempo.png');
     instruccionOpciones = loadImage('resources/instruccionesOpciones.png');
+    instruccionArquetipo = loadImage('resources/arqInt.png');
+    instruccionPuesto = loadImage('resources/puestoInt.png');
     gif1 = loadImage('resources/nuevoGifDef1.gif');
     gif2 = loadImage('resources/nuevoGifDef2.gif');
 
@@ -77,6 +79,7 @@ function preload() {
     btnResultados = loadImage('resources/btnResultados.png');
     btnContratar2 = loadImage('resources/btnContratarGris.png');
     btnContinuar2 = loadImage('resources/btnContinuarGris.png');
+    btnContinuarPresionado = loadImage('resources/contPres.png');
     btnFinalizar = loadImage('resources/btnFinalizar.png');
 
     btnArquetipo = loadImage('resources/BotonArqueotipo.png');
@@ -208,6 +211,8 @@ function draw() {
         case 10:
             //GIF
             image(gif1, 0, 0,1280, 720);
+            image(instruccionArquetipo, 400, 20);
+            image(btnContinuar, 1030, 620);
             break;
         //NIVEL 1 MATCH ARQUETIPO
         case 11:
@@ -230,6 +235,8 @@ function draw() {
         case 13:
             //GIF2
             image(gif2, 0, 0,1280, 720);
+            image(instruccionPuesto, 400, 20);
+            image(btnContinuar, 1030, 630);
             break;
         //NIVEL 2 MATCH TRABAJOS
         case 14:
@@ -317,7 +324,9 @@ function mouseClicked() {
             if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) pantalla = 10;
             break;
         case 10:
-            pantalla = 11;
+            if(mouseX > 1040 && mouseX < 1245 && mouseY > 620 && mouseY < 696){
+                pantalla = 11;
+            }
             setInterval(timeIt, 1000);
             break;
         case 11:
@@ -372,7 +381,9 @@ function mouseClicked() {
             break;
         case 13:
             logic.addCharacters();
-            pantalla = 14;
+            if(mouseX > 1040 && mouseX < 1245 && mouseY > 630 && mouseY < 706){
+                pantalla = 14;
+            }
             break;
         case 14:
             if (!locked) {
@@ -520,6 +531,9 @@ function mouseMoved() {
             if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) image(btnOk, 528, 496);
             break;
         case 10:
+            if(mouseX > 1040 && mouseX < 1245 && mouseY > 620 && mouseY < 696){
+                image(btnContinuarPresionado, 1030, 620);
+            }
             break;
         case 11:
             if(zoneAdmi) if (mouseX > 538 && mouseX < 745 && mouseY > 626 && mouseY < 700) image(btnContinuar, 640, 670);
@@ -530,6 +544,9 @@ function mouseMoved() {
             if (mouseX > 1140 && mouseX < 1205 && mouseY > 55 && mouseY < 118) image(btnEquis, 1148, 59);
             break;
         case 13:
+            if(mouseX > 1040 && mouseX < 1245 && mouseY > 630 && mouseY < 706){
+                image(btnContinuarPresionado, 1030, 630);
+            }
             break;
         case 14:
             imageMode(CORNER);
