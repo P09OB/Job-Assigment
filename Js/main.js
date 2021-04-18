@@ -759,9 +759,9 @@ function results(){
     totalPuntaje = puntaje1 + puntaje2;
     tiempo = counter;
     
-    text(totalErrores, 629, 381);
-    text(totalPuntaje+"/200", 496, 281);
-    text(minutes+" : "+seconds,589,481);
+    text(totalErrores, 540, 290);
+    //text(totalPuntaje+"/200", 496, 281);
+    text(minutes+" : "+seconds,512,389);
 
     //text("Repeticiones Nivel1: " + repeticionesNivel1, 680, 429);
     //text("Estado: "+estado,680,500);
