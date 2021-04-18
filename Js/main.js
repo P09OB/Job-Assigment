@@ -49,7 +49,7 @@ function preload() {
     //FONDOS
     fondoInicio = loadImage('./resources/fondoInicio.png');
     fondoInstrucciones = loadImage('./resources/instrucciones.png');
-    fondoCandidatos = loadImage('./resources/FondoCandidatos.png');
+    fondoCandidatos = loadImage('./resources/fondoCandidatos.png');
     fondoArquetipo = loadImage('./resources/fondoArquetipo.png');
     fondoTiempo = loadImage('./resources/tiempoAgotado.png');
 
