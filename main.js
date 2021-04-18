@@ -47,55 +47,55 @@ function setup() {
 
 function preload() {
     //FONDOS
-    fondoInicio = loadImage('resources/fondoInicio.png');
-    fondoInstrucciones = loadImage('resources/instrucciones.png');
-    fondoCandidatos = loadImage('resources/FondoCandidatos.png');
-    fondoArquetipo = loadImage('resources/fondoArquetipo.png');
-    fondoTiempo = loadImage('resources/tiempoAgotado.png');
+    fondoInicio = loadImage('./resources/fondoInicio.png');
+    fondoInstrucciones = loadImage('./resources/instrucciones.png');
+    fondoCandidatos = loadImage('./resources/FondoCandidatos.png');
+    fondoArquetipo = loadImage('./resources/fondoArquetipo.png');
+    fondoTiempo = loadImage('./resources/tiempoAgotado.png');
 
-    instruccionGeneral = loadImage('resources/instruccionesGeneral.png');
-    instruccionTiempo = loadImage('resources/instruccionesTiempo.png');
-    instruccionOpciones = loadImage('resources/instruccionesOpciones.png');
-    instruccionArquetipo = loadImage('resources/arqInt.png');
-    instruccionPuesto = loadImage('resources/puestoInt.png');
-    gif1 = loadImage('resources/nuevoGifDef1.gif');
-    gif2 = loadImage('resources/nuevoGifDef2.gif');
+    instruccionGeneral = loadImage('./resources/instruccionesGeneral.png');
+    instruccionTiempo = loadImage('./resources/instruccionesTiempo.png');
+    instruccionOpciones = loadImage('./resources/instruccionesOpciones.png');
+    instruccionArquetipo = loadImage('./resources/arqInt.png');
+    instruccionPuesto = loadImage('./resources/puestoInt.png');
+    gif1 = loadImage('./resources/nuevoGifDef1.gif');
+    gif2 = loadImage('./resources/nuevoGifDef2.gif');
 
     //BOTONES
-    btoInicio = loadImage('resources/btnInicio1.png');
-    btnEntiendo = loadImage('resources/btnEntiendo1.png');
+    btoInicio = loadImage('./resources/btnInicio1.png');
+    btnEntiendo = loadImage('./resources/btnEntiendo1.png');
     btnContinuar = loadImage('resources/btnContinuar1.png');
     btnEmpezar = loadImage('resources/btnEmpezar1.png');
-    btnVer = loadImage('resources/btnVer.png');
-    btnAsignar = loadImage('resources/btnAsignar.png');
-    btnOk = loadImage('resources/btnOk.png');
-    btnEquis = loadImage('resources/EquisNormal.png');
-    btnVolver = loadImage('resources/btnVolver.png');
-    btnVolverNormal = loadImage('resources/btnVolverNormal.png')
-    btnConfirmar = loadImage('resources/confirmar.png');
-    buttonEntendido = loadImage('resources/botonEntendido.png');
-    btnContratar = loadImage('resources/contratarBtn.png');
-    btnInfo = loadImage('resources/btnInfo.png');
-    btnResultados = loadImage('resources/btnResultados.png');
-    btnContratar2 = loadImage('resources/btnContratarGris.png');
-    btnContinuar2 = loadImage('resources/btnContinuarGris.png');
-    btnContinuarPresionado = loadImage('resources/contPres.png');
-    btnFinalizar = loadImage('resources/btnFinalizar.png');
+    btnVer = loadImage('./resources/btnVer.png');
+    btnAsignar = loadImage('./resources/btnAsignar.png');
+    btnOk = loadImage('./resources/btnOk.png');
+    btnEquis = loadImage('./resources/EquisNormal.png');
+    btnVolver = loadImage('./resources/btnVolver.png');
+    btnVolverNormal = loadImage('./resources/btnVolverNormal.png')
+    btnConfirmar = loadImage('./resources/confirmar.png');
+    buttonEntendido = loadImage('./resources/botonEntendido.png');
+    btnContratar = loadImage('./resources/contratarBtn.png');
+    btnInfo = loadImage('./resources/btnInfo.png');
+    btnResultados = loadImage('./resources/btnResultados.png');
+    btnContratar2 = loadImage('./resources/btnContratarGris.png');
+    btnContinuar2 = loadImage('./resources/btnContinuarGris.png');
+    btnContinuarPresionado = loadImage('./resources/contPres.png');
+    btnFinalizar = loadImage('./resources/btnFinalizar.png');
 
-    btnArquetipo = loadImage('resources/BotonArqueotipo.png');
-    btnCandidatos = loadImage('resources/botonCandidatos.png');
+    btnArquetipo = loadImage('./resources/BotonArqueotipo.png');
+    btnCandidatos = loadImage('./resources/botonCandidatos.png');
 
     //ARQUEOTIPOS
-    fondoAnalista = loadImage('resources/Analistas.png');
-    fondoDiplomatico = loadImage('resources/Diplomaticos.png');
-    fondoCentinela = loadImage('resources/Centinelas.png');
-    fondoExplorador = loadImage('resources/Exploradores.png');
+    fondoAnalista = loadImage('./resources/Analistas.png');
+    fondoDiplomatico = loadImage('./resources/Diplomaticos.png');
+    fondoCentinela = loadImage('./resources/Centinelas.png');
+    fondoExplorador = loadImage('./resources/Exploradores.png');
 
     //CV 
-    estefaniaInfo = loadImage('resources/Estefania.png');
-    jhonInfo = loadImage('resources/Jhon.png');
-    davidInfo = loadImage('resources/David.png');
-    camilaInfo = loadImage('resources/Camila.png');
+    estefaniaInfo = loadImage('./resources/Estefania.png');
+    jhonInfo = loadImage('./resources/Jhon.png');
+    davidInfo = loadImage('./resources/David.png');
+    camilaInfo = loadImage('./resources/Camila.png');
 
     //ELEMENTOS NIVEL 1
 
