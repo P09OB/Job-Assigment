@@ -1,5 +1,5 @@
 let pantalla = 0;
-let postulante = 'David';
+let postulante = '';
 let cargo = 'original';
 
 let characters = [];
@@ -17,6 +17,11 @@ let diplomatico;
 let centinela = false;
 let explorador = false;
 
+let viewDavid = false;
+let viewCamila = false;
+let viewJhon = false;
+let viewEstefania = false;
+
 let timer;
 let counter = 300;
 let seconds, minutes;
@@ -24,6 +29,7 @@ let tiempo;
 
 let send = false;
 let wrong = false;
+let adBoolean = false;
 let timeAd = false;
 let locked = false;
 let nivel2 = false;
@@ -35,8 +41,6 @@ let finish = false;
 let validar = true;
 let estado = '';
 let logic = new Logic();
-
-
 
 function setup() {
 
@@ -58,6 +62,8 @@ function preload() {
     instruccionOpciones = loadImage('./resources/instruccionesOpciones.png');
     instruccionArquetipo = loadImage('./resources/arqInt.png');
     instruccionPuesto = loadImage('./resources/puestoInt.png');
+    instrucconError = loadImage('./resources/instruccionesError.png');
+    instruccionInfo = loadImage('./resources/instruccionInfo.png');
     gif1 = loadImage('./resources/nuevoGifDef1.gif');
     gif2 = loadImage('./resources/nuevoGifDef2.gif');
 
@@ -81,6 +87,7 @@ function preload() {
     btnContinuar2 = loadImage('./resources/btnContinuarGris.png');
     btnContinuarPresionado = loadImage('./resources/contPres.png');
     btnFinalizar = loadImage('./resources/btnFinalizar.png');
+    btnAtras = loadImage('./resources/btnAtras.png');
 
     btnArquetipo = loadImage('./resources/BotonArqueotipo.png');
     btnCandidatos = loadImage('./resources/botonCandidatos.png');
@@ -143,6 +150,7 @@ function preload() {
     confirmation = loadImage('resources/Confirmacion.png');
     candidatosBloqueado = loadImage('resources/candidatosBloqueado.png');
     arqueotiposBloqueado = loadImage('resources/arqueotiposBloqueado.png');
+    adCv = loadImage ('resources/viewCandidatos.png');
 
 }
 
@@ -198,6 +206,7 @@ function draw() {
                     break;
             }
             if (nivel2) image(btnVolverNormal, 1022, 610);
+            if(adBoolean) image(adCv,0,0);
             break;
         //INSTRUCCIONES DE TIEMPO
         case 8:
@@ -224,9 +233,9 @@ function draw() {
                 image(btnContinuar2,527, 625);
             }
             logic.paintCharacter();
-            fill(255, 0, 0);
+            fill(255);
             noStroke();
-            text("Errores : " + erroresNivel1, 1085, 130);
+            text(erroresNivel1, 1211, 152);
             break;
         //RESUMEN ARQUETIPO
         case 12:
@@ -267,6 +276,13 @@ function draw() {
             results();
             
             break;
+        case 17:
+            image(instrucconError,0,0);
+
+            break;
+        case 18:
+            image(instruccionInfo,0,0);
+            break;
 
     }
 
@@ -292,36 +308,49 @@ function mouseClicked() {
 
         case 3:
             if (mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675) pantalla = 4;
+            if (mouseX > 60 && mouseX < 264 && mouseY > 598 && mouseY < 672) pantalla = 2;
             break;
 
         case 4:
             if (mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675) pantalla = 5;
+            if (mouseX > 60 && mouseX < 264 && mouseY > 598 && mouseY < 672) pantalla = 3;
             break;
 
         case 5:
             if (mouseX > 1000 && mouseX < 1215 && mouseY > 600 && mouseY < 675) pantalla = 6;
+            if (mouseX > 60 && mouseX < 264 && mouseY > 598 && mouseY < 672) pantalla = 4;
             break;
         case 6:
             if (mouseX > 520 && mouseX < 735 && mouseY > 600 && mouseY < 675) pantalla = 7;
             break;
         case 7:
             if (mouseX > 1030 && mouseX < 1235 && mouseY > 622 && mouseY < 698) {
+                
                 if (nivel1) {
                     pantalla = 11;
 
                 } else {
-                    pantalla = 8;
+                    if(viewEstefania && viewJhon && viewCamila && viewDavid){
+                        pantalla = 8;
+                    }else{
+                        adBoolean = true;
+                    }
                 }
                 if (nivel2) {
                     pantalla = 14;
                 }
             }
+        if(adBoolean){
+            if (mouseX > 538, mouseX < 739 && mouseY > 545 && mouseY < 620) {
+                adBoolean = false;
+            }
+        }
             break;
         case 8:
             if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) pantalla = 9;
             break;
         case 9:
-            if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) pantalla = 10;
+            if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) pantalla = 17;
             break;
         case 10:
             if(mouseX > 1040 && mouseX < 1245 && mouseY > 620 && mouseY < 696){
@@ -354,7 +383,7 @@ function mouseClicked() {
                             puntaje1 = 0;
                         }
                         zoneAdmi = false;
-                        pantalla = 13;
+                        pantalla = 18;
                         nivel1 = false;
                     }
                 }
@@ -455,7 +484,12 @@ function mouseClicked() {
             break;
         case 16:
             //Reiniciar valores 
-
+            break;
+        case 17:
+            if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) pantalla = 10;
+            break;
+        case 18:
+            if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) pantalla = 13;
             break;
     }
 
@@ -476,7 +510,7 @@ function mouseClicked() {
                 }
                 estado = "TIEMPO TERMINADO";
         }
-        if (nivel2 ){
+        if (nivel2){
             logic.matchJobs();
             estado = "TIEMPO TERMINADO";
         }
@@ -519,10 +553,22 @@ function mouseMoved() {
                     image(btnVolver, 1020, 610);
                 }
             }
-            if (mouseX > 162 && mouseX < 325 && mouseY > 75 && mouseY < 242) logic.select('David', 244);
-            if (mouseX > 366 && mouseX < 529 && mouseY > 75 && mouseY < 242) logic.select('Camila', 448);
-            if (mouseX > 522 && mouseX < 715 && mouseY > 75 && mouseY < 242) logic.select('Jhon', 633);
-            if (mouseX > 745 && mouseX < 908 && mouseY > 75 && mouseY < 242) logic.select('Estefania', 826);
+            if (mouseX > 162 && mouseX < 325 && mouseY > 75 && mouseY < 242) {
+                viewDavid = true
+                logic.select('David', 244) 
+            } 
+            if (mouseX > 366 && mouseX < 529 && mouseY > 75 && mouseY < 242){
+                viewCamila = true;
+                logic.select('Camila', 448);
+            } 
+            if (mouseX > 522 && mouseX < 715 && mouseY > 75 && mouseY < 242) {
+                viewJhon = true;
+                logic.select('Jhon', 633);
+            }
+            if (mouseX > 745 && mouseX < 908 && mouseY > 75 && mouseY < 242){
+                viewEstefania = true;
+                logic.select('Estefania', 826);
+            } 
             break;
         case 8:
             if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) image(btnOk, 528, 496);
@@ -561,7 +607,19 @@ function mouseMoved() {
         case 15:
             if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) image(btnResultados, 530, 453);
             break;
+        case 17:
+            if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) image(btnOk, 528, 493);
+            break;
+        case 18:
+            if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) image(btnOk, 528, 493);
+            break;
 
+    }
+
+    if(pantalla === 3 || pantalla === 4 || pantalla === 5){
+        if (mouseX > 60 && mouseX < 264 && mouseY > 598 && mouseY < 672){
+            image(btnAtras,50,598);
+        }
     }
 
 }
@@ -584,7 +642,7 @@ function mouseDragged() {
             if (characters[2].getPosX() === mouseX && mouseY) {
                 posicion = 3;
             }
-            //ANALISTA
+            //ESTEFANIA
             if (characters[3].getPosX() === mouseX && mouseY) {
                 posicion = 4;
             }
@@ -672,10 +730,6 @@ function time() {
         }
         text(minutes + " " + ":" + cero + seconds, 1118, 70);
     }
-
-
-
-
 }
 
 function ad() {
@@ -718,6 +772,12 @@ function ad() {
 
     }
 
+    if(adBoolean){
+        if (mouseX > 538, mouseX < 739 && mouseY > 545 && mouseY < 620) {
+        image(buttonEntendido,528, 545);
+        }
+    }
+
     if (send) {
         image(confirmation, 0, 0);
         if (mouseX > 380, mouseX < 585 && mouseY > 360 && mouseY < 434) {
@@ -758,11 +818,9 @@ function results(){
     totalErrores = erroresNivel1 + erroresNivel2;
     totalPuntaje = puntaje1 + puntaje2;
     tiempo = counter;
-    
-    text(totalErrores, 540, 290);
+    text(totalErrores, 660, 337);
     //text(totalPuntaje+"/200", 496, 281);
-    text(minutes+" : "+seconds,512,389);
-
+    //text(minutes+" : "+seconds,512,389);
     //text("Repeticiones Nivel1: " + repeticionesNivel1, 680, 429);
     //text("Estado: "+estado,680,500);
 }
