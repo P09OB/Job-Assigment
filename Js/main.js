@@ -274,6 +274,7 @@ function draw() {
         case 16:
             image(summary, 0, 0);
             results();
+            image(btnContinuar, 515, 550);
             
             break;
         case 17:
@@ -289,7 +290,6 @@ function draw() {
     time();
     mouseMoved();
     ad();
-
 }
 
 function mouseClicked() {
@@ -606,6 +606,11 @@ function mouseMoved() {
             break;
         case 15:
             if (mouseX > 539 && mouseX < 743 && mouseY > 453 && mouseY < 527) image(btnResultados, 530, 453);
+            break;
+        case 16:
+            if(mouseX > 526 && mouseX < 730 && mouseY > 550 && mouseY < 626){
+                image(btnContinuarPresionado, 515, 550);
+            }
             break;
         case 17:
             if (mouseX > 538 && mouseX < 742 && mouseY > 496 && mouseY < 570) image(btnOk, 528, 493);
