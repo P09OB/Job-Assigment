@@ -79,6 +79,13 @@ class Logic {
                 if (posicion === 4) {
                     if (!analista) erroresNivel1 += 1; posicion = 0;
                 }
+
+                if(TimeIsUp){
+                    if (!diplomatico) erroresNivel1 += 1;
+                    if (!explorador) erroresNivel1 += 1;
+                    if (!centinela) erroresNivel1 += 1;
+                    if (!analista) erroresNivel1 += 1;
+                }
             }
     
         }

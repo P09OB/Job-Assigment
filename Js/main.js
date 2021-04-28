@@ -23,7 +23,7 @@ let viewJhon = false;
 let viewEstefania = false;
 
 let timer;
-let counter = 300;
+let counter = 40;
 let seconds, minutes;
 let tiempo;
 
@@ -39,6 +39,7 @@ let btnLocked = false;
 let zoneAdmi = false;
 let finish = false;
 let validar = true;
+let TimeIsUp = false;
 let estado = '';
 let logic = new Logic();
 
@@ -500,19 +501,21 @@ function mouseClicked() {
     if(finish){
         if (mouseX > 538 && mouseX < 739 && mouseY > 545 && mouseY < 620){
             validar = false;
+            TimeIsUp = true;
             finish = false;
         if (nivel1) {
+            logic.matchArqueotipo();
             let operacion = erroresNivel1 * 10;
                 if(erroresNivel1 <= 10){
                     puntaje1 -= operacion;
                 } else{
                     puntaje1 = 0;
                 }
-                estado = "TIEMPO TERMINADO";
+                estado = "TIEMPO TERMINADO NIVEL 1";
         }
         if (nivel2){
             logic.matchJobs();
-            estado = "TIEMPO TERMINADO";
+            estado = "TIEMPO TERMINADO NIVEL 2";
         }
         pantalla = 15;
 
