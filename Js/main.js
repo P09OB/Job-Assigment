@@ -23,7 +23,7 @@ let viewJhon = false;
 let viewEstefania = false;
 
 let timer;
-let counter = 40;
+let counter = 300;
 let seconds, minutes;
 let tiempo;
 
